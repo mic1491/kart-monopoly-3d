@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>大富翁 × 積木卡丁車 3D | 贏家買地大作戰</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="game-wrap">
+    <canvas id="game-canvas"></canvas>
+    <div id="split-divider" class="hidden"></div>
+
+    <!-- Lobby Overlay -->
+    <div id="lobby-screen" class="overlay">
+      <div class="lobby-card">
+        <div class="badge">🎲 大富翁 × 🏎️ 3D 卡丁車</div>
+        <h1 class="title">積木大富翁車神 3D</h1>
+        <p class="subtitle">踩空地 ➔ <b>10秒快衝賽（贏家才能買地！）</b><br/>踩對手地 ➔ <b>1圈決鬥賽（贏了直接搶地！）</b></p>
+
+        <div class="opt-row">
+          <span class="opt-label">遊玩人數</span>
+          <div class="pill-group" id="player-mode-group">
+            <button class="pill active" data-humans="1">👤 1 人 vs 3 電腦</button>
+            <button class="pill" data-humans="2">👥 2 人同樂 (分割賽車)</button>
+          </div>
+        </div>
+
+        <div class="opt-row">
+          <span class="opt-label">回合長度</span>
+          <div class="pill-group" id="rounds-group">
+            <button class="pill active" data-rounds="8">⚡ 快速場 (8 回合)</button>
+            <button class="pill" data-rounds="15">🏆 標準場 (15 回合)</button>
+          </div>
+        </div>
+
+        <div class="controls-note">
+          <span>電腦：<kbd>WASD</kbd>／<kbd>方向鍵</kbd> 開車・<kbd>Shift</kbd> 甩尾・<kbd>Space</kbd> 骰子/道具</span>
+          <span id="gp-badge" class="gp-badge hidden">🕹️ 已連接搖桿/手把</span>
+        </div>
+
+        <button id="start-game-btn" class="primary-btn">🎲 開始大富翁開尬！</button>
+      </div>
+    </div>
+
+    <!-- Board Mode HUD -->
+    <div id="board-hud" class="hidden">
+      <div class="top-bar">
+        <div class="round-pill" id="round-pill">第 1 / 8 回合</div>
+        <div class="players-strip" id="players-strip"></div>
+        <div class="top-btns">
+          <button id="mute-btn" class="icon-btn" title="音效開關">🔊</button>
+          <button id="home-btn" class="icon-btn" title="回首頁">🏠</button>
+        </div>
+      </div>
+
+      <div id="board-toast" class="board-toast hidden"></div>
+
+      <!-- Turn Action Dock -->
+      <div class="action-dock" id="action-dock">
+        <div class="turn-who" id="turn-who">輪到：閃電金星</div>
+        <div class="dock-btns">
+          <button id="roll-btn" class="primary-btn">🎲 擲骰子</button>
+          <button id="cards-btn" class="secondary-btn">🃏 道具卡 (<span id="card-count">0</span>)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decision / Event Modal -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-icon" id="modal-icon">🏠</div>
+        <h2 class="modal-title" id="modal-title">標題</h2>
+        <p class="modal-desc" id="modal-desc">說明文字</p>
+        <div class="modal-actions" id="modal-actions"></div>
+      </div>
+    </div>
+
+    <!-- 3D Kart Race HUD -->
+    <div id="race-hud" class="hidden">
+      <div class="race-top-bar">
+        <div class="race-tag" id="race-tag">⚡ 10秒搶地快閃賽</div>
+        <div class="race-standings" id="race-standings"></div>
+      </div>
+      <div id="race-countdown" class="race-countdown hidden">3</div>
+      <div id="race-banner" class="race-banner hidden"></div>
+      <div class="race-item-pill" id="race-item-pill">道具：無</div>
+
+      <!-- Mobile Touch Controls (Centered Large Steer Pad + Compact Vertical Right Buttons ABOVE it!) -->
+      <div id="touch-controls" class="hidden">
+        <div class="steer-pad" id="steer-pad">
+          <div class="steer-half left">◀</div>
+          <div class="steer-half right">▶</div>
+          <div class="steer-knob" id="steer-knob"></div>
+        </div>
+        <div class="touch-right">
+          <button class="touch-btn red small" id="btn-brake">煞車<br/>倒車</button>
+          <button class="touch-btn orange big" id="btn-use">道具<br/>N2O</button>
+          <button class="touch-btn cyan big" id="btn-drift">甩尾</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
